@@ -2,9 +2,11 @@ import sqlite3
 from texts14 import PRODUCTS
 from texts14 import USERS
 
+# Используем одно имя базы данных везде
+DATABASE_NAME = 'my_database.db'
 
 def initiate_db():
-    connection = sqlite3.connect('products.db')
+    connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
 
     cursor.execute('''
@@ -41,9 +43,8 @@ def initiate_db():
     connection.close()
 
 
-
 def get_all_products():
-    connection = sqlite3.connect('products.db')
+    connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
 
     cursor.execute('SELECT * FROM Products')
@@ -55,7 +56,7 @@ def get_all_products():
 
 def add_user(username: str, email: str, age: int):
     try:
-        with sqlite3.connect('products.db') as connection:
+        with sqlite3.connect(DATABASE_NAME) as connection:
             cursor = connection.cursor()
 
             # Добавляем пользователя
@@ -67,24 +68,26 @@ def add_user(username: str, email: str, age: int):
             # Добавляем commit внутри try блока
             connection.commit()
 
-            # Для проверки  добавлен вывод последнего ID
+            # Для проверки добавлен вывод последнего ID
             last_id = cursor.lastrowid
             print(f"Пользователь успешно добавлен с ID: {last_id}")
+            return True
 
     except sqlite3.Error as e:
         print(f"Ошибка при добавлении пользователя: {e}")
+        return False
 
 
 # Для проверки добавлена функция
 def get_all_users():
-    with sqlite3.connect('products.db') as connection:
+    with sqlite3.connect(DATABASE_NAME) as connection:
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM Users')
         return cursor.fetchall()
 
 
 def is_included(username):
-    connection = sqlite3.connect('products.db')
+    connection = sqlite3.connect(DATABASE_NAME)
     cursor = connection.cursor()
 
     cursor.execute('SELECT COUNT(*) FROM Users WHERE username = ?', (username,))
@@ -97,5 +100,4 @@ def is_included(username):
 if __name__ == "__main__":
     initiate_db()
     print("База данных создана!")
-
 

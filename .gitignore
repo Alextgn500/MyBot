@@ -1,0 +1,33 @@
+# Виртуальное окружение
+.venv/
+venv/
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+*.class
+
+# Логи
+*.log
+
+# База данных SQLite (если используется)
+db.sqlite3
+
+# Файл с переменными окружения
+.env
+
+# Статические и медиа файлы
+staticfiles/
+media/
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+config.py
