@@ -18,6 +18,23 @@ from crud_functions import is_included, add_user, initiate_db
 import crud_functions
 from db import init_db
 
+from dotenv import load_dotenv
+
+# Загружаем переменные из .env
+load_dotenv()
+
+# Получаем токен и ADMIN_ID
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+ADMIN_ID = int(os.getenv('ADMIN_ID'))
+
+# Проверяем, что токен загружен
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN не найден в .env файле!")
+
+print(f"Токен загружен: {BOT_TOKEN[:10]}...")
+print(f"ADMIN_ID: {ADMIN_ID}")
+
+
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -80,7 +97,7 @@ def get_all_products():
 
 
 # Инициализация бота и диспетчера
-bot = Bot(token='7777')
+bot = Bot(token=BOT_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher( storage=storage)
 
